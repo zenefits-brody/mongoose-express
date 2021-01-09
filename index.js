@@ -15,11 +15,12 @@ mongoose
     console.log(error);
   });
 
-app.set('view', path.join(__dirname, 'view'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.get('/dog', (req, res) => {
-  res.send('Woof!');
+app.get('/products', async (req, res) => {
+  const products = await Product.find({});
+  res.render('products/index', { products });
 });
 
 app.listen(3000, () => {
