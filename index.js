@@ -6,6 +6,8 @@ const methodOverride = require('method-override');
 
 const Product = require('./models/product');
 
+const categories = ['fruit', 'vegetable', 'dairy', 'bakery'];
+
 mongoose
   .connect('mongodb://localhost:27017/farmStand', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -35,7 +37,7 @@ app.post('/products', async (req, res) => {
 });
 
 app.get('/products/new', async (req, res) => {
-  res.render('products/new');
+  res.render('products/new', { categories });
 });
 
 app.get('/products/:id', async (req, res) => {
@@ -47,7 +49,7 @@ app.get('/products/:id', async (req, res) => {
 app.get('/products/:id/edit', async (req, res) => {
   const { id } = req.params;
   const product = await Product.findById(id);
-  res.render('products/edit', { product });
+  res.render('products/edit', { product, categories });
 });
 
 app.put('/products/:id', async (req, res) => {
